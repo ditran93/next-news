@@ -1,0 +1,11 @@
+tìm hiểu nextjs và material ui trước: mục tiêu dựng được 1 site tin tức
+ - Bao gồm trang chủ ở path “/”: lấy 5 bài viết từ https://newsapi.org/ và hiển thị dạng list
+ - chi tiết post ở path “/:postID” khi click vào item ở trang chủ
+ - Yêu cầu: Tất cả bài viết đều được SSG
+
+ - install MUI
+ - design homepage
+ - connect API
+ - listing news
+ - implement news detail page
+ - improvise

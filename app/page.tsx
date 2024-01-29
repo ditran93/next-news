@@ -1,95 +1,48 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
+"use client";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import { useQuery } from "@tanstack/react-query";
+import { fetchNews } from "@/lib/http-requests";
+import { NewsArticle } from "@/models/news-article";
+import NewsItem from "@/components/news-item";
 export default function Home() {
+  const { data } = useQuery({
+    queryKey: ["newsData"],
+    queryFn: fetchNews,
+  });
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <Container
+      maxWidth="md"
+      sx={{
+        backgroundColor: "#f5f5f5",
+        width: "100%",
+        height: "auto",
+        paddingTop: "2rem",
+        marginTop: "2rem",
+        borderRadius: "1rem",
+        border: "1px solid #000000",
+      }}
+    >
+      <Box
+        sx={{
+          backgroundColor: "lightblue",
+          width: "100%",
+          height: "5rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "1rem",
+        }}
+      >
+        <Typography variant="h4">Recent News</Typography>
+      </Box>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      {data &&
+        data.map((news: NewsArticle, index: number) => (
+          <NewsItem key={index} news={news} newsId={index} />
+        ))}
+    </Container>
   );
 }
